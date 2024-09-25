@@ -1,12 +1,13 @@
-package com.tamerlan.cryptoapp
+package com.tamerlan.cryptoapp.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.tamerlan.cryptoapp.adapters.CoinInfoAdapter
+
 import com.tamerlan.cryptoapp.databinding.ActivityCoinPriceListBinding
-import com.tamerlan.cryptoapp.pojo.CoinPriceInfo
+import com.tamerlan.cryptoapp.domain.CoinInfoEntity
+import com.tamerlan.cryptoapp.presentation.adapters.CoinInfoAdapter
 
 
 class CoinPriceList : AppCompatActivity() {
@@ -21,7 +22,7 @@ class CoinPriceList : AppCompatActivity() {
         val adapter = CoinInfoAdapter(this)
 
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
-            override fun onCoinClick(coinPriceInfo: CoinPriceInfo) {
+            override fun onCoinClick(coinPriceInfo: CoinInfoEntity) {
                 val intent = CoinDetailActivity.newIntent(
                     this@CoinPriceList,
                     coinPriceInfo.fromSymbol
@@ -34,7 +35,7 @@ class CoinPriceList : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
 
-        viewModel.priceList.observe(this, Observer {
+        viewModel.coinInfoList.observe(this, Observer {
             adapter.coinInfoList = it
         })
 

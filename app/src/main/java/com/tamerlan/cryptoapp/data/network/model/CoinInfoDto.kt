@@ -1,18 +1,13 @@
-package com.tamerlan.cryptoapp.pojo
+package com.tamerlan.cryptoapp.data.network.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
-
 import com.google.gson.annotations.SerializedName
-import com.tamerlan.cryptoapp.api.ApiFactory.BASE_IMAGE_URL
-import com.tamerlan.cryptoapp.utils.convertTimestampToTime
-import io.reactivex.rxjava3.annotations.NonNull
 
 
 @Entity(tableName = "full_price_list")
-data class CoinPriceInfo(
-
+data class CoinInfoDto(
     @SerializedName("TYPE")
     @Expose
     val type: String? = null,
@@ -60,7 +55,7 @@ data class CoinPriceInfo(
 
     @SerializedName("LASTUPDATE")
     @Expose
-    val lastUpdate: Int? = null,
+    val lastUpdate: Long? = null,
 
     @SerializedName("LASTVOLUME")
     @Expose
@@ -205,12 +200,4 @@ data class CoinPriceInfo(
     @SerializedName("IMAGEURL")
     @Expose
     val imageUrl: String? = null
-) {
-    fun getFormattedTime(): String {
-        return convertTimestampToTime(lastUpdate?.toLong())
-    }
-
-    fun getFullImageUrl(): String {
-        return BASE_IMAGE_URL + imageUrl
-    }
-}
+)

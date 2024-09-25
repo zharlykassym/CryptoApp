@@ -11,12 +11,13 @@ import com.tamerlan.cryptoapp.presentation.adapters.CoinInfoAdapter
 
 
 class CoinPriceList : AppCompatActivity() {
-    private lateinit var binding: ActivityCoinPriceListBinding
+    private val binding by lazy {
+        ActivityCoinPriceListBinding.inflate(layoutInflater)
+    }
     private lateinit var viewModel: CoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCoinPriceListBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         val adapter = CoinInfoAdapter(this)

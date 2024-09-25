@@ -11,12 +11,13 @@ import com.tamerlan.cryptoapp.databinding.ActivityCoinDetailBinding
 
 class CoinDetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityCoinDetailBinding
+    private val binding by lazy {
+        ActivityCoinDetailBinding.inflate(layoutInflater)
+    }
     private lateinit var viewModel: CoinViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCoinDetailBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         if (!intent.hasExtra(EXTRA_FROM_SYMBOL)) {
@@ -26,14 +27,16 @@ class CoinDetailActivity : AppCompatActivity() {
         val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: EMPTY_SYMBOL
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
         viewModel.getDetailInfo(fromSymbol).observe(this, Observer {
-            binding.tvPrice.text = it.price.toString()
-            binding.tvMinPrice.text = it.lowDay.toString()
-            binding.tvMaxPrice.text = it.highDay.toString()
-            binding.tvLastMarket.text = it.lastMarket.toString()
-            binding.tvLastUpdate.text = it.lastUpdate
-            binding.tvFromSymbol.text = it.fromSymbol
-            binding.tvToSymbol.text = it.toSymbol
-            Picasso.get().load(it.imageUrl).into(binding.ivLogoCoin)
+            with(binding) {
+                tvPrice.text = it.price.toString()
+                tvMinPrice.text = it.lowDay.toString()
+                tvMaxPrice.text = it.highDay.toString()
+                tvLastMarket.text = it.lastMarket.toString()
+                tvLastUpdate.text = it.lastUpdate
+                tvFromSymbol.text = it.fromSymbol
+                tvToSymbol.text = it.toSymbol
+                Picasso.get().load(it.imageUrl).into(ivLogoCoin)
+            }
         })
 
     }

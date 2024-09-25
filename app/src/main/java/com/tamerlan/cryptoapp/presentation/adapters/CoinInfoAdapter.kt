@@ -3,7 +3,6 @@ package com.tamerlan.cryptoapp.presentation.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.squareup.picasso.Picasso
 import com.tamerlan.cryptoapp.R
@@ -11,8 +10,7 @@ import com.tamerlan.cryptoapp.databinding.ItemCoinInfoBinding
 import com.tamerlan.cryptoapp.domain.CoinInfoEntity
 
 class CoinInfoAdapter(private val context: Context) :
-    Adapter<CoinInfoAdapter.CoinInfoViewHolder>() {
-    lateinit var bindind: ItemCoinInfoBinding
+    Adapter<CoinInfoViewHolder>() {
 
     var coinInfoList: List<CoinInfoEntity> = listOf()
         set(value) {
@@ -35,7 +33,7 @@ class CoinInfoAdapter(private val context: Context) :
 
     override fun onBindViewHolder(holder: CoinInfoViewHolder, position: Int) {
         val coin = coinInfoList[position]
-        with(holder) {
+        with(holder.binding) {
             with(coin) {
                 val symbolsTemplate = context.resources.getString(R.string.symbols_template)
                 val lastUpdateTemplate = context.resources.getString(R.string.last_update_template)
@@ -44,7 +42,7 @@ class CoinInfoAdapter(private val context: Context) :
                 tvUpdates.text =
                     String.format(lastUpdateTemplate, lastUpdate)
                 Picasso.get().load(imageUrl).into(ivLogoCoin)
-                itemView.setOnClickListener {
+                root.setOnClickListener {
                     onCoinClickListener?.onCoinClick(this)
                 }
             }
@@ -54,13 +52,6 @@ class CoinInfoAdapter(private val context: Context) :
 
     override fun getItemCount() = coinInfoList.size
 
-    inner class CoinInfoViewHolder(binding: ItemCoinInfoBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        val ivLogoCoin = binding.ivLogoCoin
-        val tvPrice = binding.tvPrice
-        val tvSymbols = binding.tvSymbols
-        val tvUpdates = binding.tvUpdates
-    }
 
     interface OnCoinClickListener {
         fun onCoinClick(coinPriceInfo: CoinInfoEntity)

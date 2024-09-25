@@ -1,15 +1,13 @@
-package com.tamerlan.cryptoapp
+package com.tamerlan.cryptoapp.presentation
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.squareup.picasso.Picasso
 import com.tamerlan.cryptoapp.databinding.ActivityCoinDetailBinding
-import com.tamerlan.cryptoapp.databinding.ActivityCoinPriceListBinding
 
 class CoinDetailActivity : AppCompatActivity() {
 
@@ -25,24 +23,24 @@ class CoinDetailActivity : AppCompatActivity() {
             finish()
             return
         }
-        val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL)
+        val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: EMPTY_SYMBOL
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
-        viewModel.getDetailInfo(fromSymbol ?: "").observe(this, Observer {
+        viewModel.getDetailInfo(fromSymbol).observe(this, Observer {
             binding.tvPrice.text = it.price.toString()
             binding.tvMinPrice.text = it.lowDay.toString()
             binding.tvMaxPrice.text = it.highDay.toString()
             binding.tvLastMarket.text = it.lastMarket.toString()
-            binding.tvLastUpdate.text = it.getFormattedTime()
+            binding.tvLastUpdate.text = it.lastUpdate
             binding.tvFromSymbol.text = it.fromSymbol
             binding.tvToSymbol.text = it.toSymbol
-            Picasso.get().load(it.getFullImageUrl()).into(binding.ivLogoCoin)
+            Picasso.get().load(it.imageUrl).into(binding.ivLogoCoin)
         })
 
     }
 
     companion object {
         private const val EXTRA_FROM_SYMBOL = "fSym"
-
+        private const val EMPTY_SYMBOL = ""
         fun newIntent(context: Context, fromSymbol: String): Intent {
             val intent = Intent(context, CoinDetailActivity::class.java)
             intent.putExtra(EXTRA_FROM_SYMBOL, fromSymbol)

@@ -10,7 +10,7 @@ import com.tamerlan.cryptoapp.domain.CoinInfoEntity
 import com.tamerlan.cryptoapp.presentation.adapters.CoinInfoAdapter
 
 
-class CoinPriceList : AppCompatActivity() {
+class CoinPriceListActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityCoinPriceListBinding.inflate(layoutInflater)
     }
@@ -25,7 +25,7 @@ class CoinPriceList : AppCompatActivity() {
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
             override fun onCoinClick(coinPriceInfo: CoinInfoEntity) {
                 val intent = CoinDetailActivity.newIntent(
-                    this@CoinPriceList,
+                    this@CoinPriceListActivity,
                     coinPriceInfo.fromSymbol
                 )
                 startActivity(intent)
@@ -33,11 +33,12 @@ class CoinPriceList : AppCompatActivity() {
         }
 
         binding.rvCoinPriceList.adapter = adapter
+        binding.rvCoinPriceList.itemAnimator = null
 
         viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
 
         viewModel.coinInfoList.observe(this, Observer {
-            adapter.coinInfoList = it
+            adapter.submitList(it)
         })
 
 

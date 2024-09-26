@@ -12,7 +12,9 @@
 
 ## Технологии и зависимости
 
-- **RxJava**:
+- Clean Architecture Principles
+
+- **RxJava**: -> Coroutines
   - `io.reactivex.rxjava2:rxandroid:2.1.1` и `io.reactivex.rxjava2:rxjava:2.2.9` — для асинхронной обработки данных и работы с потоками событий.
 
 - **Retrofit**:

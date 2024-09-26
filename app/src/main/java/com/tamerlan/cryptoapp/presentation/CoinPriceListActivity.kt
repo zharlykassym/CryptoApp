@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.tamerlan.cryptoapp.R
 
 import com.tamerlan.cryptoapp.databinding.ActivityCoinPriceListBinding
 import com.tamerlan.cryptoapp.domain.CoinInfoEntity
@@ -24,11 +25,11 @@ class CoinPriceListActivity : AppCompatActivity() {
 
         adapter.onCoinClickListener = object : CoinInfoAdapter.OnCoinClickListener {
             override fun onCoinClick(coinPriceInfo: CoinInfoEntity) {
-                val intent = CoinDetailActivity.newIntent(
-                    this@CoinPriceListActivity,
-                    coinPriceInfo.fromSymbol
-                )
-                startActivity(intent)
+                if (isOnePaneMode()) {
+                    launchDetailActivity(coinPriceInfo.fromSymbol)
+                } else {
+                    launchDetailFragment(coinPriceInfo.fromSymbol)
+                }
             }
         }
 
@@ -41,6 +42,32 @@ class CoinPriceListActivity : AppCompatActivity() {
             adapter.submitList(it)
         })
 
+//        binding.swipeRefreshLayout.setOnRefreshListener {
+//            viewModel.loadData()
+//            binding.swipeRefreshLayout.isRefreshing = false
+//        }
 
     }
+
+    private fun isOnePaneMode() = binding.fragmentContainer == null
+
+
+    private fun launchDetailActivity(fromSymbol: String) {
+        val intent = CoinDetailActivity.newIntent(
+            this@CoinPriceListActivity,
+            fromSymbol
+        )
+        startActivity(intent)
+    }
+
+    private fun launchDetailFragment(fromSymbol: String) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_container, CoinDetailFragment.newInstance(fromSymbol))
+            .addToBackStack(null)
+            .commit()
+    }
+
+
 }

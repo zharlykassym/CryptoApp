@@ -10,10 +10,11 @@
         android:id="@+id/ivLogoCoin"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_margin="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvSlash"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
         tools:src="@mipmap/ic_launcher" />
 
     <TextView
@@ -31,13 +32,13 @@
         android:id="@+id/tvSlash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:padding="8dp"
         android:text="@string/slash"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/cardView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivLogoCoin" />
+        app:layout_constraintTop_toBottomOf="@+id/ivLogoCoin" />
 
     <TextView
         android:id="@+id/tvToSymbol"
@@ -51,17 +52,24 @@
         tools:text="USD" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintTop_toBottomOf="@id/tvSlash">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSlash">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp">
+            android:paddingBottom="8dp"
+            tools:layout_editor_absoluteX="3dp"
+            tools:layout_editor_absoluteY="4dp">
 
             <TextView
                 android:id="@+id/tvPriceLabel"

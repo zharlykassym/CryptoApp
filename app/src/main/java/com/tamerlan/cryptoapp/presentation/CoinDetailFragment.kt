@@ -50,13 +50,12 @@ class CoinDetailFragment : Fragment() {
     }
 
 
-
     private fun getSymbol(): String {
         return requireArguments().getString(EXTRA_FROM_SYMBOL, EMPTY_SYMBOL)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 

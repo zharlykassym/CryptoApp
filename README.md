@@ -14,6 +14,8 @@
 
 - Clean Architecture Principles
 
+- Fragment implementation (landscape mode)
+
 - **RxJava**: -> Coroutines — для асинхронной обработки данных и работы с потоками событий.
 
 - **Retrofit**: для обработки сетевых запросов и преобразования JSON в объекты Kotlin.

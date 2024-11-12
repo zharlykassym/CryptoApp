@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "com.tamerlan.cryptoapp"
-    compileSdk = 34
+    compileSdk = 35
 
     buildFeatures {
         viewBinding = true
@@ -48,8 +48,8 @@ android {
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.7.0")
-    implementation("androidx.core:core-ktx:1.13.1")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.core:core-ktx:1.15.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
     implementation("com.google.android.material:material:1.12.0")
     implementation("androidx.recyclerview:recyclerview:1.3.2")
     implementation("androidx.cardview:cardview:1.0.0")
@@ -59,7 +59,7 @@ dependencies {
 
 
 
-    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
 
@@ -69,7 +69,7 @@ dependencies {
     ksp("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
 
-    val lifecycle_version = "2.8.6"
+    val lifecycle_version = "2.8.7"
     // ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
 
@@ -82,7 +82,15 @@ dependencies {
 
 
     implementation("com.squareup.picasso:picasso:2.71828")
-    implementation("androidx.work:work-runtime-ktx:2.9.1")
+    implementation("androidx.work:work-runtime-ktx:2.10.0")
+
+//    implementation(libs.dagger)
+//    ksp(libs.dagger.compiler)
+//    ksp(libs.dagger.android.processor)
+
+    implementation("com.google.dagger:dagger:2.52")
+    ksp("com.google.dagger:dagger-android-processor:2.52")
+    ksp("com.google.dagger:dagger-compiler:2.52")
 
 
 }

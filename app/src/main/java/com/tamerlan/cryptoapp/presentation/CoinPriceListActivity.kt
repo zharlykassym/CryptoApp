@@ -9,15 +9,26 @@ import com.tamerlan.cryptoapp.R
 import com.tamerlan.cryptoapp.databinding.ActivityCoinPriceListBinding
 import com.tamerlan.cryptoapp.domain.CoinInfoEntity
 import com.tamerlan.cryptoapp.presentation.adapters.CoinInfoAdapter
+import javax.inject.Inject
 
 
 class CoinPriceListActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityCoinPriceListBinding.inflate(layoutInflater)
     }
+
+
     private lateinit var viewModel: CoinViewModel
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (application as CoinApp).component
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        component.inject(this)
         super.onCreate(savedInstanceState)
         val view = binding.root
         setContentView(view)
@@ -36,7 +47,7 @@ class CoinPriceListActivity : AppCompatActivity() {
         binding.rvCoinPriceList.adapter = adapter
         binding.rvCoinPriceList.itemAnimator = null
 
-        viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
+        viewModel = ViewModelProvider(this, viewModelFactory)[CoinViewModel::class.java]
 
         viewModel.coinInfoList.observe(this, Observer {
             adapter.submitList(it)

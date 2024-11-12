@@ -6,18 +6,20 @@ import androidx.lifecycle.map
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import com.tamerlan.cryptoapp.data.database.AppDatabase
+import com.tamerlan.cryptoapp.data.database.CoinInfoDao
 import com.tamerlan.cryptoapp.data.mapper.CoinMapper
 import com.tamerlan.cryptoapp.data.workers.RefreshDataWorker
 import com.tamerlan.cryptoapp.domain.CoinInfoEntity
 import com.tamerlan.cryptoapp.domain.CoinRepository
+import javax.inject.Inject
 
-class CoinRepositoryImpl(
-    private val application: Application
+class CoinRepositoryImpl @Inject constructor(
+    private val application: Application,
+    private val coinInfoDao: CoinInfoDao,
+    private val mapper : CoinMapper
 ) : CoinRepository {
 
-    private val mapper = CoinMapper()
-    private val database = AppDatabase.getInstance(application)
-    private val coinInfoDao = database.coinPriceInfoDao()
+
 
     override fun getCoinInfoList(): LiveData<List<CoinInfoEntity>> {
         return coinInfoDao.getPriceList().map { mapper.mapListDbModelToListEntity(it) }
